@@ -9,6 +9,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  console.log('Rendering Layout component');
   const { language } = useSettings();
   
   return (

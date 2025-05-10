@@ -9,6 +9,7 @@ import ContactCTA from '@/components/home/ContactCTA';
 import ScrollReveal from '@/components/ui/scroll-reveal';
 
 const Index: React.FC = () => {
+  console.log('Rendering Index (Home) page');
   return (
     <Layout>
       <Hero />

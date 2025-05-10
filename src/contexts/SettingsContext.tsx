@@ -30,9 +30,9 @@ export const defaultTranslations = {
     },
     home: {
       headline: "Ahmed Jamal",
-      subheadline: "Digital Professional",
+      subheadline: "Digital Media and Web Development Specialist",
       cta: "View My Work",
-      bio: "Expert in social media, graphic design, web development, and training",
+      bio: "I focus on digital marketing strategies, visual content production, and web development. My experience spans media organizations and commercial companies. I follow an approach that blends digital design, modern technologies, and audience engagement.",
       exploreTitle: "Explore"
     },
     applications: {
@@ -146,8 +146,10 @@ export const defaultTranslations = {
         message: "Message",
         submit: "Send Message"
       },
+      email: "a.bur3y@gmail.com",
+      phone: "+972597780108",
       social: "Connect on Social Media",
-      direct: "Direct Contact Methods",
+      direct: "Direct Contact Methods\nPhone: +972597780108",
       meeting: "Book a Meeting"
     }
   },
@@ -168,9 +170,9 @@ export const defaultTranslations = {
     },
     home: {
       headline: "أحمد جمال",
-      subheadline: "محترف رقمي",
+      subheadline: "مختص في الإعلام الرقمي وتطوير الويب",
       cta: "استعرض أعمالي",
-      bio: "خبير في وسائل التواصل الاجتماعي والتصميم الجرافيكي وتطوير الويب والتدريب",
+      bio: "أركز على استراتيجيات التسويق الرقمي، وإنتاج المحتوى البصري، وتطوير المواقع الإلكترونية. لدي خبرة في العمل مع مؤسسات إعلامية، وشركات تجارية، وأتبنى منهجية تجمع بين التصميم الرقمي، والتقنيات الحديثة، و تعزيز تفاعل الجمهور.",
       exploreTitle: "استكشف"
     },
     applications: {
@@ -284,8 +286,10 @@ export const defaultTranslations = {
         message: "الرسالة",
         submit: "إرسال الرسالة"
       },
+      email: "a.bur3y@gmail.com",
+      phone: "+972597780108",
       social: "تواصل عبر وسائل التواصل الاجتماعي",
-      direct: "طرق الاتصال المباشر",
+      direct: "طرق الاتصال المباشر\nالهاتف: +972597780108",
       meeting: "حجز موعد"
     }
   }

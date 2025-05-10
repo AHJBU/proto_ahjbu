@@ -43,13 +43,11 @@ const defaultSettings: SiteSettings = {
  * @returns Promise<SiteSettings>
  */
 export const getSiteSettings = async (): Promise<SiteSettings> => {
-  // In a real app, this would fetch from API or database
   try {
-    const savedSettings = localStorage.getItem('site_settings');
-    if (savedSettings) {
-      return JSON.parse(savedSettings);
-    }
-    return defaultSettings;
+    const response = await fetch('/all_site_variables.json');
+    if (!response.ok) throw new Error('Failed to fetch site settings');
+    const data = await response.json();
+    return data.siteSettings;
   } catch (error) {
     console.error('Error getting site settings:', error);
     return defaultSettings;
@@ -63,31 +61,25 @@ export const getSiteSettings = async (): Promise<SiteSettings> => {
  */
 export const updateSiteSettings = async (settings: Partial<SiteSettings>): Promise<SiteSettings> => {
   try {
-    const currentSettings = await getSiteSettings();
-    const updatedSettings = { ...currentSettings, ...settings };
-    
-    // In a real app, this would be an API call
-    localStorage.setItem('site_settings', JSON.stringify(updatedSettings));
-    
-    // Update document title if site name changed
-    if (settings.siteName) {
-      document.title = settings.siteName;
-    }
-    
-    // Update favicon if changed
-    if (settings.favicon && settings.favicon !== currentSettings.favicon) {
-      const existingLink = document.querySelector('link[rel="icon"]');
-      if (existingLink) {
-        existingLink.setAttribute('href', settings.favicon);
-      } else {
-        const link = document.createElement('link');
-        link.rel = 'icon';
-        link.href = settings.favicon;
-        document.head.appendChild(link);
+    // Get the full vars object first
+    const varsRes = await fetch('/all_site_variables.json');
+    if (!varsRes.ok) throw new Error('Failed to fetch site variables');
+    const allVars = await varsRes.json();
+    const newVars = {
+      ...allVars,
+      siteSettings: {
+        ...allVars.siteSettings,
+        ...settings
       }
-    }
-    
-    return updatedSettings;
+    };
+    const response = await fetch('/api/site-variables', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newVars),
+    });
+    if (!response.ok) throw new Error('Failed to update site settings');
+    // Return the updated siteSettings only
+    return newVars.siteSettings;
   } catch (error) {
     console.error('Error updating site settings:', error);
     throw error;
@@ -98,29 +90,7 @@ export const updateSiteSettings = async (settings: Partial<SiteSettings>): Promi
  * Reset site settings to defaults
  * @returns Promise<SiteSettings>
  */
-export const resetSiteSettings = async (): Promise<SiteSettings> => {
-  try {
-    // In a real app, this would be an API call
-    localStorage.setItem('site_settings', JSON.stringify(defaultSettings));
-    
-    // Update document title
-    document.title = defaultSettings.siteName;
-    
-    // Reset favicon
-    const existingLink = document.querySelector('link[rel="icon"]');
-    if (existingLink) {
-      existingLink.setAttribute('href', defaultSettings.favicon);
-    }
-    
-    return defaultSettings;
-  } catch (error) {
-    console.error('Error resetting site settings:', error);
-    throw error;
-  }
-};
-
 export default {
   getSiteSettings,
-  updateSiteSettings,
-  resetSiteSettings
+  updateSiteSettings
 };

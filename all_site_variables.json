@@ -1,0 +1,118 @@
+{
+  "siteSettings": {
+    "siteName": "Ahmed Jamal - Portfolio & Blog",
+    "siteDescription": "Personal portfolio and blog showcasing my work and thoughts.",
+    "siteAuthor": "Ahmed Jamal",
+    "favicon": "/favicon.ico",
+    "logo": "/images/logo.png",
+    "defaultLanguage": "en",
+    "defaultTheme": "light",
+    "maintenanceMode": false,
+    "contactEmail": "contact@ahmedjamal.com",
+    "tagline": "Digital Specialist & Consultant",
+    "language": "ar",
+    "timezone": "Asia/Riyadh",
+    "dateFormat": "DD/MM/YYYY",
+    "timeFormat": "24h"
+  },
+  "profileData": {
+    "nameAr": "أحمد جمال",
+    "nameEn": "Ahmed Jamal",
+    "titleAr": "أخصائي رقمي",
+    "titleEn": "Digital Specialist",
+    "bioAr": "خبير في وسائل التواصل، التصميم، الفيديو، البرمجة، تطوير المواقع والتطبيقات، التدريب والاستشارات.",
+    "bioEn": "Professional with expertise in social media, graphic design, video editing, programming, web/app development, training and consulting.",
+    "addressAr": "الرياض، السعودية",
+    "addressEn": "Riyadh, Saudi Arabia",
+    "logo": "",
+    "name": "Ahmed Jamal",
+    "title": "Digital Specialist",
+    "bio": "Professional with expertise in social media, graphic design, video editing, programming, web/app development, training and consulting.",
+    "email": "contact@ahmedjamal.com",
+    "phone": "+966 50 000 0000",
+    "address": "Riyadh, Saudi Arabia",
+    "website": "https://ahmedjamal.com",
+    "avatar": "/assets/profile-placeholder.jpg",
+    "coverImage": "/assets/cover-placeholder.jpg",
+    "socialLinks": [],
+    "education": [
+      {
+        "id": "1",
+        "institution": "جامعة طلال أبو غزالة",
+        "degree": "ماجستير التسويق الإلكتروني",
+        "field": "التسويق الإلكتروني",
+        "startDate": "2024",
+        "endDate": "Present",
+        "description": ""
+      }
+    ],
+    "workExperience": [],
+    "skills": []
+  },
+  "mockContent": {
+    "about": {
+      "intro": "I am Ahmed Jamal, a multidisciplinary digital professional with over 10 years of experience in design, development, and social media.",
+      "story": "I started my professional journey as a graphic designer...",
+      "vision": "I constantly strive for innovation and continuous learning...",
+      "quotes": [
+        {"text": "Design is not just what it looks like. Design is how it works.", "author": "Steve Jobs"},
+        {"text": "Creativity is seeing what others don't see.", "author": "Anonymous"}
+      ],
+      "photoGallery": ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"]
+    },
+    "contact": {
+      "email": "contact@ahmedjamal.com",
+      "phone": "+1 234 567 890",
+      "address": "123 Main Street, New York, NY 10001",
+      "hours": "Mon - Fri: 9:00 AM - 5:00 PM",
+      "socialLinks": [
+        { "name": "Twitter", "url": "https://twitter.com" },
+        { "name": "LinkedIn", "url": "https://linkedin.com" },
+        { "name": "GitHub", "url": "https://github.com" }
+      ],
+      "mapEmbedUrl": "https://www.google.com/maps/embed?..."
+    },
+    "portfolioCategories": [
+      { "id": "all", "name": { "en": "All", "ar": "الكل" } },
+      { "id": "graphic", "name": { "en": "Graphic Design", "ar": "تصميم جرافيك" } },
+      { "id": "web", "name": { "en": "Web Development", "ar": "تطوير ويب" } },
+      { "id": "app", "name": { "en": "App Development", "ar": "تطوير تطبيقات" } },
+      { "id": "video", "name": { "en": "Video Editing", "ar": "مونتاج فيديو" } }
+    ],
+    "blogCategories": [
+      { "value": "all", "label": { "en": "All Categories", "ar": "جميع الفئات" } },
+      { "value": "web-development", "label": { "en": "Web Development", "ar": "تطوير الويب" } },
+      { "value": "design", "label": { "en": "Design", "ar": "تصميم" } },
+      { "value": "mobile-development", "label": { "en": "Mobile Development", "ar": "تطوير تطبيقات" } },
+      { "value": "seo", "label": { "en": "SEO", "ar": "تحسين محركات البحث" } }
+    ]
+  },
+  "adminSettings": {
+    "themeOptions": [
+      { "id": "default", "name": "Default Purple", "primary": "#9b87f5", "secondary": "#7E69AB", "accent": "#1EAEDB" },
+      { "id": "blue", "name": "Ocean Blue", "primary": "#3b82f6", "secondary": "#1e40af", "accent": "#38bdf8" },
+      { "id": "green", "name": "Fresh Green", "primary": "#10b981", "secondary": "#059669", "accent": "#34d399" },
+      { "id": "amber", "name": "Warm Amber", "primary": "#f59e0b", "secondary": "#d97706", "accent": "#fbbf24" },
+      { "id": "rose", "name": "Rosy Pink", "primary": "#f43f5e", "secondary": "#be123c", "accent": "#fb7185" },
+      { "id": "violet", "name": "Deep Violet", "primary": "#8b5cf6", "secondary": "#6d28d9", "accent": "#a78bfa" },
+      { "id": "slate", "name": "Classic Slate", "primary": "#64748b", "secondary": "#475569", "accent": "#94a3b8" },
+      { "id": "custom", "name": "Custom Theme", "primary": "", "secondary": "", "accent": "" }
+    ],
+    "seoSettings": {
+      "metaTitle": "Ahmed Jamal | Digital Hub",
+      "metaDescription": "Ahmed Jamal's professional portfolio - Expertise in social media, graphic design, video editing, programming, web/app development, training and consulting",
+      "metaKeywords": "ahmed jamal, digital specialist, consultant, web development, app development, social media, graphic design",
+      "ogImage": "/assets/og-image.jpg",
+      "twitterHandle": "@ahmed_jamal",
+      "googleAnalyticsId": "",
+      "enableIndexing": true
+    },
+    "advancedSettings": {
+      "customHeader": "",
+      "customFooter": "",
+      "browserCaching": true,
+      "imageOptimization": true,
+      "minify": true
+    }
+  }
+}

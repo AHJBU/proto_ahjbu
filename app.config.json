@@ -1,0 +1,15 @@
+{
+  "databaseType": "sqlite",
+  "databaseConfig": {
+    "filename": "./data/app.db"
+  },
+  "adminUser": {
+    "username": "admin",
+    "email": "admin@example.com"
+  },
+  "siteSettings": {
+    "siteName": "Ahmed Jamal Portfolio",
+    "tagline": "Digital Hub and Portfolio"
+  },
+  "isSetupComplete": false
+}

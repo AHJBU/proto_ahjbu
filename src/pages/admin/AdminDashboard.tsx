@@ -11,6 +11,16 @@ const AdminDashboard: React.FC = () => {
   return (
     <AdminLayout title="Dashboard">
       <div className="grid gap-6">
+        {/* زر إعادة الإعداد للمطورين فقط */}
+        <button
+          style={{marginBottom: '16px', padding: '8px 16px', background: '#dc2626', color: 'white', borderRadius: '4px'}}
+          onClick={() => {
+            localStorage.removeItem('setupComplete');
+            window.location.reload();
+          }}
+        >
+          إعادة الإعداد (Reset Setup) — للمطورين فقط
+        </button>
         <ScrollReveal>
           <Card>
             <CardContent className="p-6">

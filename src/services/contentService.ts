@@ -173,14 +173,29 @@ export interface BlogPostData {
 }
 
 export const getBlogPosts = async (): Promise<BlogPostData[]> => {
-  const posts = await getContent("blogPosts");
-  return posts || [];
+  try {
+    const response = await fetch('http://localhost:4000/api/blog');
+    if (!response.ok) throw new Error('Failed to fetch blog posts');
+    const posts = await response.json();
+    return posts;
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
+    return [];
+  }
 };
 
-export const getBlogPostBySlug = async (slug: string): Promise<BlogPostData | null> => {
-  const posts = await getBlogPosts();
-  return posts.find(post => post.slug === slug) || null;
+export const getBlogPostById = async (id: string | number): Promise<BlogPostData | null> => {
+  try {
+    const response = await fetch(`http://localhost:4000/api/blog/${id}`);
+    if (!response.ok) throw new Error('Failed to fetch blog post');
+    const post = await response.json();
+    return post;
+  } catch (error) {
+    console.error('Error fetching blog post:', error);
+    return null;
+  }
 };
+
 
 export const addBlogPost = async (post: BlogPostData): Promise<boolean> => {
   const posts = await getBlogPosts();

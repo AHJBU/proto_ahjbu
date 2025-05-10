@@ -12,73 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Plus, PenLine, Trash2, Eye, Search, Filter, RefreshCw } from 'lucide-react';
 
 // Mock blog posts data
-const mockBlogPosts = [
-  {
-    id: 1,
-    title: 'Getting Started with React and Tailwind CSS',
-    excerpt: 'Learn how to set up and use React with Tailwind CSS for rapid development.',
-    status: 'published',
-    publishDate: '2025-04-20',
-    category: 'Web Development',
-    author: 'Ahmed Jamal',
-    tags: ['React', 'Tailwind CSS', 'Frontend'],
-    image: '/assets/blog1.jpg',
-    views: 452,
-    comments: 8
-  },
-  {
-    id: 2,
-    title: 'The Future of Mobile App Development',
-    excerpt: 'Exploring upcoming trends and technologies that will shape mobile app development.',
-    status: 'published',
-    publishDate: '2025-04-15',
-    category: 'App Development',
-    author: 'Ahmed Jamal',
-    tags: ['Mobile', 'App Development', 'Trends'],
-    image: '/assets/blog2.jpg',
-    views: 321,
-    comments: 5
-  },
-  {
-    id: 3,
-    title: 'Effective Social Media Strategies for 2025',
-    excerpt: 'Discover the most effective social media strategies to grow your audience in 2025.',
-    status: 'draft',
-    publishDate: null,
-    category: 'Social Media',
-    author: 'Ahmed Jamal',
-    tags: ['Social Media', 'Marketing', 'Digital Strategy'],
-    image: '/assets/blog3.jpg',
-    views: 0,
-    comments: 0
-  },
-  {
-    id: 4,
-    title: 'Advanced UI/UX Design Principles',
-    excerpt: 'Master advanced UI/UX design principles to create exceptional user experiences.',
-    status: 'scheduled',
-    publishDate: '2025-05-01',
-    category: 'Design',
-    author: 'Ahmed Jamal',
-    tags: ['Design', 'UI/UX', 'User Experience'],
-    image: '/assets/blog4.jpg',
-    views: 0,
-    comments: 0
-  },
-  {
-    id: 5,
-    title: 'SEO Tactics for 2025',
-    excerpt: 'The latest SEO tactics to improve your website ranking in search engines.',
-    status: 'draft',
-    publishDate: null,
-    category: 'SEO',
-    author: 'Ahmed Jamal',
-    tags: ['SEO', 'Digital Marketing', 'Web Traffic'],
-    image: '/assets/blog5.jpg',
-    views: 0,
-    comments: 0
-  }
-];
+// حذف mockBlogPosts - سيتم جلب التدوينات من الباكند
 
 // Mock categories
 const mockCategories = [
@@ -90,12 +24,31 @@ const mockCategories = [
 ];
 
 const AdminBlogPostList: React.FC = () => {
-  const [posts, setPosts] = useState(mockBlogPosts);
+  const [posts, setPosts] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  // جلب التدوينات من الباكند
+  const fetchPosts = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('http://localhost:4000/api/blog');
+      if (!response.ok) throw new Error('فشل جلب التدوينات');
+      const data = await response.json();
+      setPosts(data);
+    } catch (err) {
+      setPosts([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchPosts();
+  }, []);
   
   // Filter posts based on search term, status, and category
   const filteredPosts = posts.filter(post => {
@@ -113,33 +66,32 @@ const AdminBlogPostList: React.FC = () => {
   const handleNewPost = () => {
     navigate('/admin/blog/new');
   };
-  
+
   // Handle editing an existing post
   const handleEditPost = (id: number) => {
     navigate(`/admin/blog/edit/${id}`);
   };
-  
-  // Handle deleting a post
-  const handleDeletePost = (id: number) => {
+
+  // حذف تدوينة عبر API
+  const handleDeletePost = async (id: number) => {
     setIsLoading(true);
-    
-    // In a real app, this would be an API call to delete the post
-    setTimeout(() => {
-      setPosts(posts.filter(post => post.id !== id));
-      
-      toast({
-        title: "Post Deleted",
-        description: "The blog post has been deleted successfully.",
-      });
-      
+    try {
+      const response = await fetch(`http://localhost:4000/api/blog/${id}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error('فشل حذف التدوينة');
+      toast({ title: "تم الحذف", description: "تم حذف التدوينة بنجاح." });
+      fetchPosts(); // تحديث القائمة بعد الحذف
+    } catch (err: any) {
+      toast({ title: 'خطأ', description: err.message, variant: 'destructive' });
+    } finally {
       setIsLoading(false);
-    }, 500);
+    }
   };
-  
+
   // Handle view post
   const handleViewPost = (id: number) => {
     window.open(`/blog/${id}`, '_blank');
   };
+
   
   // Reset filters
   const resetFilters = () => {
@@ -168,31 +120,31 @@ const AdminBlogPostList: React.FC = () => {
         </div>
         
         <div className="flex flex-wrap gap-2 w-full md:w-auto">
-          <Select value={statusFilter || ''} onValueChange={(value) => setStatusFilter(value || null)}>
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="">All Statuses</SelectItem>
-              <SelectItem value="published">Published</SelectItem>
-              <SelectItem value="draft">Drafts</SelectItem>
-              <SelectItem value="scheduled">Scheduled</SelectItem>
-            </SelectContent>
-          </Select>
+          <Select value={statusFilter || 'all'} onValueChange={(value) => setStatusFilter(value === 'all' ? null : value)}>
+  <SelectTrigger className="w-[150px]">
+    <SelectValue placeholder="Status" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="all">All Statuses</SelectItem>
+    <SelectItem value="published">Published</SelectItem>
+    <SelectItem value="draft">Drafts</SelectItem>
+    <SelectItem value="scheduled">Scheduled</SelectItem>
+  </SelectContent>
+</Select>
           
-          <Select value={categoryFilter || ''} onValueChange={(value) => setCategoryFilter(value || null)}>
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="">All Categories</SelectItem>
-              {mockCategories.map(category => (
-                <SelectItem key={category.id} value={category.name}>
-                  {category.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Select value={categoryFilter || 'all'} onValueChange={(value) => setCategoryFilter(value === 'all' ? null : value)}>
+  <SelectTrigger className="w-[150px]">
+    <SelectValue placeholder="Category" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="all">All Categories</SelectItem>
+    {mockCategories.map(category => (
+      <SelectItem key={category.id} value={category.name}>
+        {category.name}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
           
           {(searchTerm || statusFilter || categoryFilter) && (
             <Button variant="outline" onClick={resetFilters}>

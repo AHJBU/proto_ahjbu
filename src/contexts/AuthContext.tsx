@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/use-toast';
 
-interface UserData {
+export interface UserData {
   id: string;
   name: string;
   email: string;
@@ -11,7 +11,7 @@ interface UserData {
   twoFactorEnabled: boolean;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
   user: UserData | null;
   isLoading: boolean;
   isAuthenticated: boolean;

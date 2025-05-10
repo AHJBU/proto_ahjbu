@@ -36,6 +36,17 @@ export interface Skill {
 }
 
 export interface ProfileData {
+  // Bilingual fields
+  nameAr?: string;
+  nameEn?: string;
+  titleAr?: string;
+  titleEn?: string;
+  bioAr?: string;
+  bioEn?: string;
+  addressAr?: string;
+  addressEn?: string;
+  logo?: string;
+  // Old fields for backward compatibility
   name: string;
   title: string;
   bio: string;
@@ -57,6 +68,15 @@ export interface ProfileData {
 
 // Default profile data
 const defaultProfile: ProfileData = {
+  nameAr: "أحمد جمال",
+  nameEn: "Ahmed Jamal",
+  titleAr: "أخصائي رقمي",
+  titleEn: "Digital Specialist",
+  bioAr: "خبير في وسائل التواصل، التصميم، الفيديو، البرمجة، تطوير المواقع والتطبيقات، التدريب والاستشارات.",
+  bioEn: "Professional with expertise in social media, graphic design, video editing, programming, web/app development, training and consulting.",
+  addressAr: "الرياض، السعودية",
+  addressEn: "Riyadh, Saudi Arabia",
+  logo: "",
   name: "Ahmed Jamal",
   title: "Digital Specialist",
   bio: "Professional with expertise in social media, graphic design, video editing, programming, web/app development, training and consulting.",
@@ -67,7 +87,17 @@ const defaultProfile: ProfileData = {
   avatar: "/assets/profile-placeholder.jpg",
   coverImage: "/assets/cover-placeholder.jpg",
   socialLinks: [],
-  education: [],
+  education: [
+    {
+      id: "1",
+      institution: "جامعة طلال أبو غزالة",
+      degree: "ماجستير التسويق الإلكتروني",
+      field: "التسويق الإلكتروني",
+      startDate: "2024",
+      endDate: "Present",
+      description: ""
+    }
+  ],
   workExperience: [],
   skills: []
 };
@@ -97,10 +127,11 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [profileData, setProfileData] = useState<ProfileData>(defaultProfile);
 
   const updatePersonalInfo = (data: Partial<ProfileData>) => {
-    setProfileData(prev => ({
-      ...prev,
-      ...data
-    }));
+    setProfileData(prev => {
+      const updated = { ...prev, ...data };
+      console.log('updatePersonalInfo - new profileData:', updated);
+      return updated;
+    });
   };
 
   const addSocialLink = (link: SocialLink) => {

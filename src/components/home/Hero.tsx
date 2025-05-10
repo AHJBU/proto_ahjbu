@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useSettings } from '@/contexts/SettingsContext';
+import { useProfile } from '@/contexts/ProfileContext';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -17,17 +18,17 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ data }) => {
   const { language, translations } = useSettings();
+  const { profileData } = useProfile();
   const t = translations.home;
   const navigate = useNavigate();
 
-  // Use data from props if available, otherwise use translations
-  const headline = data?.headline || t.headline;
-  const subheadline = data?.subheadline || t.subheadline;
-  const bio = data?.bio || t.bio;
+  // استخدم بيانات الملف الشخصي إذا توفرت، وإلا استخدم الترجمة الافتراضية
+  const headline = profileData.name || data?.headline || t.headline;
+  const subheadline = profileData.title || data?.subheadline || t.subheadline;
+  const bio = profileData.bio || data?.bio || t.bio;
   const ctaText = data?.ctaText || t.cta;
-  
-  // Default placeholder image if none provided
-  const profileImage = data?.profileImage || '/placeholder.svg';
+  // صورة الملف الشخصي
+  const profileImage = profileData.avatar || data?.profileImage || '/ahmedjamal-profile.jpg';
 
   return (
     <section className="py-20 px-4 sm:px-6 overflow-hidden relative">

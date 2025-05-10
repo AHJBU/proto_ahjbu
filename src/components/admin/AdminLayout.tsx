@@ -33,6 +33,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
   // Sidebar links
   const sidebarLinks = [
     { name: 'Dashboard', icon: Home, path: '/admin' },
+    { name: 'Personal Profile', icon: User, path: '/admin/personal-profile' },
     { name: 'Profile', icon: User, path: '/admin/profile' },
     { name: 'Resume/CV', icon: FileText, path: '/admin/cv' },
     { name: 'Portfolio', icon: Image, path: '/admin/portfolio' },

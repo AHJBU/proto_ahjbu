@@ -27,19 +27,19 @@ export const SiteSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
       try {
         const siteSettings = await getSiteSettings();
         setSettings(siteSettings);
-        
         // Apply settings
-        document.title = siteSettings.siteName;
-        
-        // Set favicon
-        const existingLink = document.querySelector('link[rel="icon"]');
-        if (existingLink) {
-          existingLink.setAttribute('href', siteSettings.favicon);
-        } else {
-          const link = document.createElement('link');
-          link.rel = 'icon';
-          link.href = siteSettings.favicon;
-          document.head.appendChild(link);
+        if (siteSettings.siteName) document.title = siteSettings.siteName;
+        // Set favicon if available
+        if (siteSettings.favicon) {
+          const existingLink = document.querySelector('link[rel="icon"]');
+          if (existingLink) {
+            existingLink.setAttribute('href', siteSettings.favicon);
+          } else {
+            const link = document.createElement('link');
+            link.rel = 'icon';
+            link.href = siteSettings.favicon;
+            document.head.appendChild(link);
+          }
         }
       } catch (error) {
         console.error('Failed to load site settings:', error);
@@ -47,7 +47,6 @@ export const SiteSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
         setIsLoading(false);
       }
     };
-
     loadSettings();
   }, []);
 

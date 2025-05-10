@@ -1,0 +1,1 @@
+import{j as e}from"./index-CEFGCZnp.js";const s=()=>e.jsxs("div",{children:[e.jsx("h2",{children:"Setup Wizard"}),e.jsx("p",{children:"This is a placeholder for the setup wizard component."})]});export{s as default};

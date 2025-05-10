@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { useProfile, Education, WorkExperience, Skill, SocialLink } from '@/contexts/ProfileContext';
 import { Button } from '@/components/ui/button';
@@ -110,6 +110,19 @@ const AdminProfile: React.FC = () => {
     address: profileData.address,
     website: profileData.website
   });
+
+  // Keep personalInfo in sync with profileData from context
+  useEffect(() => {
+    setPersonalInfo({
+      name: profileData.name,
+      title: profileData.title,
+      bio: profileData.bio,
+      email: profileData.email,
+      phone: profileData.phone,
+      address: profileData.address,
+      website: profileData.website
+    });
+  }, [profileData]);
   
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

@@ -16,15 +16,16 @@ const ContactCTA: React.FC = () => {
     : 'Have a project or an idea you want to discuss? I\'m here to help and turn your ideas into reality';
   const buttonText = language === 'ar' ? 'ارسل رسالة' : 'Send a Message';
   
-  const contactInfo = [
+  const { translations } = useSettings();
+const contactInfo = [
     { 
       icon: Mail, 
-      text: 'example@email.com', 
+      text: translations.contact.email, 
       label: language === 'ar' ? 'البريد الإلكتروني' : 'Email'
     },
     { 
       icon: Phone, 
-      text: '+123 456 7890', 
+      text: translations.contact.phone, 
       label: language === 'ar' ? 'الهاتف' : 'Phone'
     },
     { 

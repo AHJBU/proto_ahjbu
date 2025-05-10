@@ -11,7 +11,8 @@ import { ProfileProvider } from "@/contexts/ProfileContext";
 
 // Import Setup Wizard and config check
 const SetupWizard = React.lazy(() => import("./components/setup_wizard/SetupWizard"));
-import { checkSetupStatus } from "./config/setup.config";
+// import { checkSetupStatus } from "./config/setup.config";
+// NOTE: Removed due to browser compatibility. Use a static value for now.
 
 // Public Pages - Lazy Loaded
 const Index = React.lazy(() => import("./pages/Index"));
@@ -22,6 +23,7 @@ const Contact = React.lazy(() => import("./pages/Contact"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const Applications = React.lazy(() => import("./pages/Applications"));
 const ApplicationDetails = React.lazy(() => import("./pages/ApplicationDetails"));
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Training = React.lazy(() => import("./pages/Training"));
 const TrainingDetails = React.lazy(() => import("./pages/TrainingDetails"));
 const Blog = React.lazy(() => import("./pages/Blog"));
@@ -40,6 +42,7 @@ const AdminLogin = React.lazy(() => import("./pages/admin/AdminLogin"));
 const AdminTwoFactor = React.lazy(() => import("./pages/admin/AdminTwoFactor"));
 const AdminDashboard = React.lazy(() => import("./pages/admin/AdminDashboard"));
 const AdminProfile = React.lazy(() => import("./pages/admin/AdminProfile"));
+const AdminPersonalProfile = React.lazy(() => import("./pages/admin/AdminPersonalProfile"));
 const AdminApplications = React.lazy(() => import("./pages/admin/AdminApplications"));
 const AdminTraining = React.lazy(() => import("./pages/admin/AdminTraining"));
 const AdminBlog = React.lazy(() => import("./pages/admin/AdminBlog"));
@@ -67,6 +70,7 @@ const queryClient = new QueryClient({
 });
 
 const LoadingFallback = () => {
+  console.log('Rendering LoadingFallback');
   console.log("Rendering LoadingFallback");
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontSize: '1.5rem' }}>
@@ -76,77 +80,74 @@ const LoadingFallback = () => {
 };
 
 const App: React.FC = () => {
-  console.log("App component rendering");
-  const [isSetupComplete, setIsSetupComplete] = useState<boolean | null>(null);
+  console.log('Rendering App component');
+  const [isSetupComplete, setIsSetupComplete] = useState<boolean | null>(false);
   const [isLoadingSetupStatus, setIsLoadingSetupStatus] = useState(true);
+
+  console.log("App component rendering");
+  console.log("isSetupComplete:", isSetupComplete);
+  console.log("isLoadingSetupStatus:", isLoadingSetupStatus);
 
   useEffect(() => {
     console.log("App useEffect for fetchSetupStatus triggered");
-    const fetchSetupStatus = async () => {
-      console.log("fetchSetupStatus called");
-      try {
-        const status = await checkSetupStatus();
-        console.log("checkSetupStatus returned:", status);
-        setIsSetupComplete(status);
-      } catch (error) {
-        console.error("Error checking setup status:", error);
-        setIsSetupComplete(false); // Assume setup is needed if status check fails
-      } finally {
-        console.log("fetchSetupStatus finished");
-        setIsLoadingSetupStatus(false);
-      }
-    };
-    fetchSetupStatus();
+    setIsSetupComplete(false);
+    setIsLoadingSetupStatus(false);
   }, []);
 
   if (isLoadingSetupStatus) {
     console.log("App rendering LoadingFallback due to isLoadingSetupStatus");
     return <LoadingFallback />;
   }
-  console.log("isLoadingSetupStatus is false. isSetupComplete:", isSetupComplete);
+
+
 
   return (
     <QueryClientProvider client={queryClient}>
-      {console.log("Rendering QueryClientProvider")}
       <SettingsProvider>
-        {console.log("Rendering SettingsProvider")}
         <TooltipProvider>
-          {console.log("Rendering TooltipProvider")}
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            {console.log("Rendering BrowserRouter")}
             <Suspense fallback={<LoadingFallback />}>
-              {console.log("Rendering Suspense. isSetupComplete:", isSetupComplete)}
-              {isSetupComplete === false ? (
-                <>
-                  {console.log("Setup is NOT complete, rendering SetupWizard routes")}
-                  <Routes>
-                    <Route path="/*" element={<SetupWizard />} />
-                  </Routes>
-                </>
-              ) : (
-                <>
-                  {console.log("Setup IS complete, rendering main app routes with AuthProvider")}
-                  <AuthProvider>
-                    {console.log("Rendering AuthProvider")}
-                    <SiteSettingsProvider>
-                      {console.log("Rendering SiteSettingsProvider")}
-                      <ProfileProvider>
-                        {console.log("Rendering ProfileProvider")}
-                        <Routes>
-                          {console.log("Rendering main Routes")}
-                          {/* Public Routes */}
-                          <Route path="/" element={<Index />} />
-                          <Route path="/cv" element={<CV />} />
-                          <Route path="/portfolio" element={<Portfolio />} />
-                          <Route path="/portfolio/:id" element={<PortfolioDetails />} />
-                          <Route path="/contact" element={<Contact />} />
-                          <Route path="/applications" element={<Applications />} />
-                          <Route path="/applications/:id" element={<ApplicationDetails />} />
-                          <Route path="/training" element={<Training />} />
-                          <Route path="/training/:id" element={<TrainingDetails />} />
-                          <Route path="/blog" element={<Blog />} />
+              <AuthProvider>
+                <SiteSettingsProvider>
+                  <ProfileProvider>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/cv" element={<CV />} />
+                      <Route path="/portfolio" element={<Portfolio />} />
+                      <Route path="/portfolio/:id" element={<PortfolioDetails />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/applications" element={<Applications />} />
+                      <Route path="/applications/:id" element={<ApplicationDetails />} />
+                      <Route path="/training" element={<Training />} />
+                      <Route path="/training/:id" element={<TrainingDetails />} />
+                      <Route path="/blog" element={<Blog />} />
+                      <Route path="/blog/:id" element={<BlogPost />} />
+                      <Route path="/achievements" element={<Achievements />} />
+                      <Route path="/achievements/:id" element={<AchievementDetails />} />
+                      <Route path="/literature" element={<Literature />} />
+                      <Route path="/literature/:id" element={<LiteratureItem />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/press" element={<Press />} />
+                      <Route path="/press/:id" element={<PressDetails />} />
+                      <Route path="/resources" element={<Resources />} />
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/applications" element={<Applications />} />
+                      <Route path="/applications/:id" element={<ApplicationDetails />} />
+                      <Route path="/training" element={<Training />} />
+                      <Route path="/training/:id" element={<TrainingDetails />} />
+                      <Route path="/blog" element={<Blog />} />
+                      <Route path="/blog/:id" element={<BlogPost />} />
+                      <Route path="/achievements" element={<Achievements />} />
+                      <Route path="/achievements/:id" element={<AchievementDetails />} />
+                      <Route path="/literature" element={<Literature />} />
+                      <Route path="/literature/:id" element={<LiteratureItem />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/press" element={<Press />} />
+                      <Route path="/press/:id" element={<PressDetails />} />
+                      <Route path="/resources" element={<Resources />} />
                           <Route path="/blog/:id" element={<BlogPost />} />
                           <Route path="/achievements" element={<Achievements />} />
                           <Route path="/achievements/:id" element={<AchievementDetails />} />
@@ -163,6 +164,7 @@ const App: React.FC = () => {
 
                           {/* Protected Admin Routes */}
                           <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+                          <Route path="/admin/personal-profile" element={<ProtectedRoute><AdminPersonalProfile /></ProtectedRoute>} />
                           <Route path="/admin/profile" element={<ProtectedRoute><AdminProfile /></ProtectedRoute>} />
                           <Route path="/admin/cv" element={<ProtectedRoute><AdminCV /></ProtectedRoute>} />
                           <Route path="/admin/portfolio" element={<ProtectedRoute><AdminPortfolio /></ProtectedRoute>} />
@@ -186,26 +188,15 @@ const App: React.FC = () => {
                           {/* 404 Route */}
                           <Route path="*" element={<NotFound />} />
                         </Routes>
-                        {console.log("Finished rendering main Routes")}
                       </ProfileProvider>
-                      {console.log("Finished rendering ProfileProvider")}
                     </SiteSettingsProvider>
-                    {console.log("Finished rendering SiteSettingsProvider")}
                   </AuthProvider>
-                  {console.log("Finished rendering AuthProvider")}
-                </>
-              )}
-            </Suspense>
-            {console.log("Finished rendering Suspense")}
-          </BrowserRouter>
-          {console.log("Finished rendering BrowserRouter")}
-        </TooltipProvider>
-        {console.log("Finished rendering TooltipProvider")}
-      </SettingsProvider>
-      {console.log("Finished rendering SettingsProvider")}
-    </QueryClientProvider>
-  );
-};
-
-export default App;
-
+                </Suspense>
+              </BrowserRouter>
+            </TooltipProvider>
+          </SettingsProvider>
+        </QueryClientProvider>
+      );
+    };
+    
+    export default App;
