@@ -1,0 +1,8 @@
+{
+  "about": {
+    "title": "About Us - Default Title From Local Storage",
+    "content": "This is the default about content loaded from local storage. Please edit this in the admin panel.",
+    "imageUrl": "/placeholder.svg"
+  }
+}
+
